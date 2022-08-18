@@ -18,6 +18,8 @@ class NodeMazeGenerator {
 
     randomRange = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
+    updateCell = (cell) => this.grid.cells[cell.y][cell.x] = cell;
+
     getNeighborCells = (cell) => {
         let neighbor_cells = [];
         for (let i = 0; i < 4; i++) {
@@ -29,10 +31,6 @@ class NodeMazeGenerator {
             }
         }
         return neighbor_cells;
-    }
-
-    updateCell = (cell) => {
-        this.grid.cells[cell.y][cell.x] = cell;
     }
 
     growingTree = () => {
