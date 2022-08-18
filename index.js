@@ -5,9 +5,11 @@ const Grid = require('./grid.js');
 const RoomGenerator = require('./roomgenerator.js');
 
 module.exports = {
-    generator: NodeMazeGenerator,
+    generators: {
+        maze: NodeMazeGenerator,
+        room: RoomGenerator
+    },
     renderer: Renderer,
     cell: Cell,
-    grid: Grid,
-    roomgenerator: RoomGenerator
+    grid: Grid
 }

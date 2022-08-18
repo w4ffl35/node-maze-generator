@@ -16,6 +16,31 @@ Generate perfect mazes with Node using a growing tree algorithm.
     const renderer = new nmg.renderer(generator);
     renderer.render();
 
+### Generator classes
+
+Generator classes can be passed as an optional array to the maze generator. 
+
+As long these classes have a `generate` method the `NodeMazeGenerator` class will run the classes in the order 
+they are provided.
+
+**Example**
+
+The following example shows how to generate a maze with rooms using the provided room generator. 
+
+    const nmg = require('node-maze-generator');
+    const mazeGenerator = new nmg.generators.maze({ generators: [
+        nmg.generators.room
+    ]});
+
+The `NodeMazeGenerator` class object will be passed to any generators given in the constructor.
+In this way it is possible to access the maze generator grid data
+
+    class SomeGenerator {
+        generate = (mazeGenerator) => {
+            // do something with mazeGenerator.grid
+        }
+    }
+
 ## Contributing
 
 Fork the repository and make a pull request.
