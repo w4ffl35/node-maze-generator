@@ -15,11 +15,22 @@ const START_X = 0;
 const START_Y = 0;
 
 class NodeMazeGenerator {
-    constructor(width, height) {
-        this.width = width || 10;
-        this.height = height || 10;
-        this.cells = [];
-        for (let x = 0; x < this.width; x++) {
+    width = MIN_WIDTH;
+    height = MIN_HEIGHT;
+    max_rooms = 0;
+    cells = [];
+
+    constructor(width, height, max_rooms) {
+        this.width = parseInt(width);
+        this.height = parseInt(height);
+        this.max_rooms = parseInt(max_rooms);
+        if (this.width <= MIN_WIDTH) this.width = MIN_WIDTH;
+        if (this.height <= MIN_HEIGHT) this.height = MIN_HEIGHT;
+        this.initializeCells();
+    }
+
+    initializeCells = () => {
+        for (let x = START_X; x < this.width; x++) {
             this.cells[x] = [];
             for (let y = 0; y < this.height; y++) {
                 this.cells[x][y] = new Cell(x, y, 1, 1);
