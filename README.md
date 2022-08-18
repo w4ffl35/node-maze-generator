@@ -8,15 +8,22 @@ Generate perfect mazes with Node using a growing tree algorithm.
 
 ## Usage
 
+    const nmg = require('node-maze-generator');
+    const generator = new nmg.generator(10, 10);
+    const renderer = new nmg.renderer(generator);
+    renderer.render();
+
 ## Contributing
+
+Fork the repository and make a pull request.
 
 ## License
 
-MIT
+[MIT](LICENSE)
 
 ## Tests
 
-    npm test
+    npm run test
 
 ## Contributors
 

@@ -2,11 +2,11 @@
   "name": "node-maze-generator",
   "version": "1.0.0",
   "description": "Generate perfect mazes with Node using a growing tree algorithm",
-  "main": "index.js",
+  "main": "nodemazegenerator.min.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node main.js",
     "test": "jest",
-    "build": "node_modules/jsmin/bin/jsmin -o nodemazegenerator.min.js mazegenerator.js"
+    "build": "jsmin -o nodemazegenerator.min.js index.js"
   },
   "repository": {
     "type": "git",

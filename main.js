@@ -1,7 +1,4 @@
 const NodeMazeGenerator = require('./mazegenerator.js');
 const Renderer = require('./renderer.js');
-
-module.exports = {
-    generator: NodeMazeGenerator,
-    renderer: Renderer
-}
+const R = new Renderer(new NodeMazeGenerator(20, 20));
+R.render();
