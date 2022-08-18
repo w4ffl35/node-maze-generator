@@ -4,18 +4,20 @@ const NORTH = 1;
 const SOUTH = 2;
 const EAST = 3;
 const WEST = 4;
-const NEIGHBOR_SPACE = 1;
 const MIN_WIDTH = 5;
 const MIN_HEIGHT = 5;
 const MIN_OUT_OF_BOUNDS = -1;
 const START_X = 0;
 const START_Y = 0;
+const NEIGHBOR_POSITIONS = [[0, -2], [0, 2], [-2, 0], [2, 0]];
 
 class NodeMazeGenerator {
     width = MIN_WIDTH;
     height = MIN_HEIGHT;
     max_rooms = 0;
     cells = [];
+    start_cell_coord = { x: 0, y: 0 };
+    unblock_neighbor = false;
 
     constructor(width, height, max_rooms) {
         this.width = parseInt(width);
@@ -41,19 +43,26 @@ class NodeMazeGenerator {
 
     isCellVisited = (x, y) => this.cells[y][x].visited;
 
-    get_unvisited_cell = (x, y) => this.isInBounds(x, y) && !this.isCellVisited(x, y) ? this.cells[y][x] : null;
+    track_unvisited_neighbors = (x, y, neighbor_cells) => {
+        if (this.isInBounds(x, y)) {
+            let cell = this.cells[y][x];
+            if (!cell.visited && cell.blocked)
+            {
+                neighbor_cells.push(cell);
+            }
+        }
+        return neighbor_cells;
+    }
 
-    get_neighbor_cells = (x, y) => {
-        let neighbor_cells = []
-        let cell1 = this.get_unvisited_cell(x + NEIGHBOR_SPACE, y)
-        let cell2 = this.get_unvisited_cell(x - NEIGHBOR_SPACE, y)
-        let cell3 = this.get_unvisited_cell(x, y + NEIGHBOR_SPACE)
-        let cell4 = this.get_unvisited_cell(x, y - NEIGHBOR_SPACE)
-        if (cell1 !== null) neighbor_cells.push(cell1)
-        if (cell2 !== null) neighbor_cells.push(cell2)
-        if (cell3 !== null) neighbor_cells.push(cell3)
-        if (cell4 !== null) neighbor_cells.push(cell4)
-        return neighbor_cells
+    get_neighbor_cells = (cell, neighbor_cells) => {
+        for (let i = 0; i < 4; i++) {
+            neighbor_cells = this.track_unvisited_neighbors(
+                cell.x + NEIGHBOR_POSITIONS[i][0],
+                cell.y + NEIGHBOR_POSITIONS[i][1],
+                neighbor_cells
+            );
+        }
+        return neighbor_cells;
     }
 
     set_cell_exits = (direction, cell) => {
@@ -65,54 +74,59 @@ class NodeMazeGenerator {
         this.cells[cell.y][cell.x].visited = true;
     }
 
+    update_cell = (cell) => this.cells[cell.y][cell.x] = cell;
+
 
     growing_tree = () => {
+        const x = this.start_cell_coord.x;
+        const y = this.start_cell_coord.y;
+        let get_cell = true;
         let prev_cells = [];
-        let cell = this.cells[this.randomRange(START_X, this.width)][this.randomRange(START_Y, this.height)];
-        let ncell = null;
-        let dir_a = null;
-        let dir_b = null;
-        while (cell) {
-            let neighbor_cells = this.get_neighbor_cells(cell.x, cell.y);
-            if (neighbor_cells.length > 0) {
+        let current_cell = this.cells[y][x];
 
-                // get random item from neighbor_cells
-                ncell = neighbor_cells[this.randomRange(0, neighbor_cells.length)];
-                dir_a = null;
-                dir_b = null;
-                if (ncell.x > cell.x) {
-                    dir_a = EAST;
-                    dir_b = WEST;
+        while (get_cell) {
+            current_cell.visited = true;
+            this.update_cell(current_cell);
+            let neighbor_cells = this.get_neighbor_cells(current_cell, []);
+            if (neighbor_cells.length > 0) {
+                let neighbor_cell_index = this.randomRange(0, neighbor_cells.length - 1);
+                let neighbor_cell = neighbor_cells[neighbor_cell_index];
+
+                // Set exits
+                let n_x = current_cell.x;
+                let n_y = current_cell.y;
+                if (neighbor_cell.x > n_x) {
+                    n_x += 1;
                 }
-                else if (ncell.x < cell.x) {
-                    dir_a = WEST;
-                    dir_b = EAST;
+                else if (neighbor_cell.x < n_x) {
+                    n_x -= 1;
                 }
-                else if (ncell.y > cell.y) {
-                    dir_a = SOUTH;
-                    dir_b = NORTH;
+                if (neighbor_cell.y > n_y) {
+                    n_y += 1;
                 }
-                else if (ncell.y < cell.y) {
-                    dir_a = NORTH;
-                    dir_b = SOUTH;
+                else if (neighbor_cell.y < n_y) {
+                    n_y -= 1;
                 }
-                if (dir_a && dir_b) {
-                    this.set_cell_exits(dir_a, cell);
-                }
-                this.set_cell_exits(dir_b, ncell);
-                prev_cells.push(cell);
-                cell = this.cells[ncell.y][ncell.x];
+                let new_cell = this.cells[neighbor_cell.y][neighbor_cell.x];
+                new_cell.blocked = false;
+                current_cell.blocked = false;
+                neighbor_cell.visited = true;
+                neighbor_cell.blocked = this.unblock_neighbor ? false : neighbor_cell.blocked;
+                this.update_cell(new_cell);
+                this.update_cell(neighbor_cell);
+                this.update_cell(current_cell);
+                prev_cells.push(current_cell);
+                current_cell = neighbor_cell;
             }
             else {
                 if (prev_cells.length > 0) {
-                    cell = prev_cells.pop();
+                    current_cell = prev_cells.pop();
                 }
                 else {
-                    cell = null;
+                    get_cell = false;
                 }
             }
         }
-
     }
 
     add_rooms = () => {
@@ -161,5 +175,4 @@ class NodeMazeGenerator {
     }
 }
 
-// export the maze generator
 module.exports = NodeMazeGenerator;

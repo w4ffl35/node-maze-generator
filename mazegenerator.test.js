@@ -7,6 +7,7 @@ describe("Maze Generator Tests", () => {
 
     beforeAll(() => {
         mazegen = new MazeGenerator(WIDTH, HEIGHT);
+        mazegen.generate();
     });
 
     test('Maze Generator is created', () => {
