@@ -12,7 +12,7 @@ Generate perfect mazes with Node using a growing tree algorithm.
 ## Usage
 
     const nmg = require('node-maze-generator');
-    const generator = new nmg.generator({width: 10, height: 10});
+    const generator = new nmg.generators.maze({width: 10, height: 10});
     const renderer = new nmg.renderer(generator);
     renderer.render();
 
