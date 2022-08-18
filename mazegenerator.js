@@ -7,6 +7,12 @@ const NORTH = 1;
 const SOUTH = 2;
 const EAST = 3;
 const WEST = 4;
+const NEIGHBOR_SPACE = 1;
+const MIN_WIDTH = 5;
+const MIN_HEIGHT = 5;
+const MIN_OUT_OF_BOUNDS = -1;
+const START_X = 0;
+const START_Y = 0;
 
 class NodeMazeGenerator {
     constructor(width, height) {
