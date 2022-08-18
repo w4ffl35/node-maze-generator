@@ -35,6 +35,12 @@ class Grid {
     getCell = (x, y) => this.isInBounds(x, y) ? this.cells[y][x] : null;
 
     getNeighborCell = (x, y) => this.isInNeighborBounds(x, y) ? this.cells[y][x] : null;
+
+    unblockCell = (x, y) => {
+        if (this.isInBounds(x, y)) {
+            this.cells[y][x].blocked = false;
+        }
+    }
 }
 
 module.exports = Grid;

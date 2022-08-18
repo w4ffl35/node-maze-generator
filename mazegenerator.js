@@ -2,6 +2,7 @@ const Grid = require('./grid.js');
 
 class NodeMazeGenerator {
     constructor(options) {
+        this.options = options;
         this.generators = options.generators || [];
         this.neighbor_positions = options.neighbor_positions || [[0, -2], [0, 2], [-2, 0], [2, 0]];
         this.start_cell_coord = { x: 1, y: 1 };
@@ -88,7 +89,7 @@ class NodeMazeGenerator {
 
     generate = () => {
         this.growingTree();
-        this.generators.forEach(GeneratorClass => new GeneratorClass().run(this.grid.cells));
+        this.generators.forEach(GeneratorClass => new GeneratorClass().generate(this));
     }
 }
 
