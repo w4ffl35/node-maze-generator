@@ -4,4 +4,5 @@ const R = new Renderer(new NodeMazeGenerator({
     width: 20,
     height: 20
 }));
+console.log("rendering...");
 R.render();
