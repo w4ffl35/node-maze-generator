@@ -2,42 +2,42 @@ const Cell = require('./cell.js');
 
 const MIN_WIDTH = 5;
 const MIN_HEIGHT = 5;
-const MIN_OUT_OF_BOUNDS = -1;
-const START_X = 0;
-const START_Y = 0;
-const NEIGHBOR_POSITIONS = [[0, -2], [0, 2], [-2, 0], [2, 0]];
+const MIN_BOUNDARY = -1;
+const MIN_NEIGHBOR_BOUNDARY = 0;
 
 class NodeMazeGenerator {
-    width = MIN_WIDTH;
-    height = MIN_HEIGHT;
-    max_rooms = 0;
-    cells = [];
-    start_cell_coord = { x: 1, y: 1 };
-    unblock_neighbor = false;
-
-    constructor(width, height, max_rooms) {
-        this.width = parseInt(width);
-        this.height = parseInt(height);
-        this.max_rooms = parseInt(max_rooms);
+    constructor(options) {
+        this.width = parseInt(options.width || MIN_WIDTH);
+        this.height = parseInt(options.height || MIN_HEIGHT);
+        this.max_rooms = parseInt(options.max_rooms || 0);
+        this.CellClass = options.cell_class||Cell;
+        this.neighbor_positions = options.neighbor_positions || [[0, -2], [0, 2], [-2, 0], [2, 0]];
+        this.start_x = parseInt(options.start_x || 0);
+        this.start_y = parseInt(options.start_y || 0);
+        this.cells = [];
+        this.start_cell_coord = { x: 1, y: 1 };
+        this.unblock_neighbor = false;
         if (this.width <= MIN_WIDTH) this.width = MIN_WIDTH;
         if (this.height <= MIN_HEIGHT) this.height = MIN_HEIGHT;
+        if (this.start_x > this.width - 1) this.start_x = this.start_x - 1;
+        if (this.start_y > this.height - 1) this.start_y = this.start_y - 1;
         this.initializeCells();
     }
 
     initializeCells = () => {
-        for (let y = START_Y; y < this.height; y++) {
+        for (let y = this.start_y; y < this.height; y++) {
             this.cells[y] = [];
-            for (let x = START_X; x < this.width; x++) {
-                this.cells[y][x] = new Cell(x, y);
+            for (let x = this.start_x; x < this.width; x++) {
+                this.cells[y][x] = new this.CellClass(x, y);
             }
         }
     }
 
     randomRange = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
-    isInBounds = (x, y) => x < this.width && x > MIN_OUT_OF_BOUNDS && y < this.height && y > MIN_OUT_OF_BOUNDS;
+    isInBounds = (x, y) => x < this.width && x > MIN_BOUNDARY && y < this.height && y > MIN_BOUNDARY;
 
-    isInNeighborBounds = (x, y) => x < this.width - 1 && x > MIN_OUT_OF_BOUNDS + 1 && y < this.height - 1 && y > MIN_OUT_OF_BOUNDS + 1;
+    isInNeighborBounds = (x, y) => x < this.width - 1 && x > MIN_NEIGHBOR_BOUNDARY && y < this.height - 1 && y > MIN_NEIGHBOR_BOUNDARY;
 
     getCell = (x, y) => {
         return this.isInBounds(x, y) ? this.cells[y][x] : null;
@@ -50,8 +50,8 @@ class NodeMazeGenerator {
     getNeighborCells = (cell) => {
         let neighbor_cells = [];
         for (let i = 0; i < 4; i++) {
-            let nx = cell.x + NEIGHBOR_POSITIONS[i][0];
-            let ny = cell.y + NEIGHBOR_POSITIONS[i][1];
+            let nx = cell.x + this.neighbor_positions[i][0];
+            let ny = cell.y + this.neighbor_positions[i][1];
             let neighbor_cell = this.getNeighborCell(nx, ny);
             if (neighbor_cell && !neighbor_cell.visited && neighbor_cell.blocked) {
                 neighbor_cells.push(neighbor_cell);
