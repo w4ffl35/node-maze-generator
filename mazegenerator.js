@@ -78,9 +78,6 @@ class NodeMazeGenerator {
 
                 // get random item from neighbor_cells
                 ncell = neighbor_cells[this.randomRange(0, neighbor_cells.length)];
-                if (ncell === undefined || ncell === null || !ncell) {
-                    continue;
-                }
                 dir_a = null;
                 dir_b = null;
                 if (ncell.x > cell.x) {
