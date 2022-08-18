@@ -29,41 +29,36 @@ class NodeMazeGenerator {
     initializeCells = () => {
         for (let x = START_X; x < this.width; x++) {
             this.cells[x] = [];
-            for (let y = 0; y < this.height; y++) {
-                this.cells[x][y] = new Cell(x, y, 1, 1);
+            for (let y = START_Y; y < this.height; y++) {
+                this.cells[x][y] = new Cell(x, y);
             }
         }
     }
 
-    get_unvisited_cell = (x, y) => {
-        if (x < this.width && x > -1 && y < this.height && y > -1) {
-            if (!this.cells[y][x].visited) {
-                return this.cells[y][x]
-            }
-        }
-        return null;
-    }
+    randomRange = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+
+    isInBounds = (x, y) => x < this.width && x > MIN_OUT_OF_BOUNDS && y < this.height && y > MIN_OUT_OF_BOUNDS;
+
+    isCellVisited = (x, y) => this.cells[y][x].visited;
+
+    get_unvisited_cell = (x, y) => this.isInBounds(x, y) && !this.isCellVisited(x, y) ? this.cells[y][x] : null;
 
     get_neighbor_cells = (x, y) => {
         let neighbor_cells = []
-        let cell1 = this.get_unvisited_cell(x + 1, y)
-        let cell2 = this.get_unvisited_cell(x - 1, y)
-        let cell3 = this.get_unvisited_cell(x, y + 1)
-        let cell4 = this.get_unvisited_cell(x, y - 1)
-        if (cell1)
-            neighbor_cells.push(cell1)
-        if (cell2)
-            neighbor_cells.push(cell2)
-        if (cell3)
-            neighbor_cells.push(cell3)
-        if (cell4)
-            neighbor_cells.push(cell4)
+        let cell1 = this.get_unvisited_cell(x + NEIGHBOR_SPACE, y)
+        let cell2 = this.get_unvisited_cell(x - NEIGHBOR_SPACE, y)
+        let cell3 = this.get_unvisited_cell(x, y + NEIGHBOR_SPACE)
+        let cell4 = this.get_unvisited_cell(x, y - NEIGHBOR_SPACE)
+        if (cell1 !== null) neighbor_cells.push(cell1)
+        if (cell2 !== null) neighbor_cells.push(cell2)
+        if (cell3 !== null) neighbor_cells.push(cell3)
+        if (cell4 !== null) neighbor_cells.push(cell4)
         return neighbor_cells
     }
 
     set_cell_exits = (direction, cell) => {
         let exits = cell.exits;
-        if (!exits.contains(direction)) {
+        if (!exits.includes(direction)) {
             exits.push(direction);
             this.cells[cell.y][cell.x].exits = exits;
         }
@@ -73,17 +68,21 @@ class NodeMazeGenerator {
 
     growing_tree = () => {
         let prev_cells = [];
-        let cell = thiscells[random.randrange(0, this.width)][random.randrange(0, this.height)];
+        let cell = this.cells[this.randomRange(START_X, this.width)][this.randomRange(START_Y, this.height)];
         let ncell = null;
         let dir_a = null;
         let dir_b = null;
-
         while (cell) {
             let neighbor_cells = this.get_neighbor_cells(cell.x, cell.y);
             if (neighbor_cells.length > 0) {
-                let ncell = random.choice(neighbor_cells);  // TODO
-                let dir_a = null;
-                let dir_b = null;
+
+                // get random item from neighbor_cells
+                ncell = neighbor_cells[this.randomRange(0, neighbor_cells.length)];
+                if (ncell === undefined || ncell === null || !ncell) {
+                    continue;
+                }
+                dir_a = null;
+                dir_b = null;
                 if (ncell.x > cell.x) {
                     dir_a = EAST;
                     dir_b = WEST;
@@ -120,32 +119,50 @@ class NodeMazeGenerator {
     }
 
     add_rooms = () => {
-        for (let n = 0; n < 10; n++) {
-            let x = random.randrange(0, self.width - 1)
-            let y = random.randrange(0, self.height - 1)
-            let cell = self.cells[y][x]
-            if (y > 0) self.set_cell_exits(NORTH, cell)
-            if (y < self.height - 1) self.set_cell_exits(SOUTH, cell)
-            if (x > 0) self.set_cell_exits(WEST, cell)
-            if (x < self.width - 1) self.set_cell_exits(EAST, cell)
+        for (let n = 0; n < this.max_rooms; n++) {
+            let x = this.randomRange(START_X, this.width);
+            let y = this.randomRange(START_Y, this.height);
+            let cell = this.cells[y][x]
+            if (y > START_Y) {
+                this.set_cell_exits(NORTH, cell)
+            }
+            else if (y < this.height - 1) {
+                this.set_cell_exits(SOUTH, cell)
+            }
+            if (x > START_X) {
+                this.set_cell_exits(WEST, cell)
+            }
+            else if (x < this.width - 1) {
+                this.set_cell_exits(EAST, cell)
+            }
             x += 1
-            if (x < self.width) self.set_cell_exits(WEST, self.cells[y][x])
+            if (x < this.width) {
+                this.set_cell_exits(WEST, this.cells[y][x])
+            }
             x -= 2
-            if (x > -1) self.set_cell_exits(EAST, self.cells[y][x])
+            if (x > MIN_OUT_OF_BOUNDS) {
+                this.set_cell_exits(EAST, this.cells[y][x])
+            }
             x += 1
             y += 1
-            if (y < self.height) self.set_cell_exits(NORTH, self.cells[y][x])
+            if (y < this.height) {
+                this.set_cell_exits(NORTH, this.cells[y][x])
+            }
             y -= 2
-            if (y > -1) self.set_cell_exits(SOUTH, self.cells[y][x])
+            if (y > MIN_OUT_OF_BOUNDS) {
+                this.set_cell_exits(SOUTH, this.cells[y][x])
+            }
         }
     }
-
 
     spawn_items = () => {}
 
     generate = () => {
-        self.growing_tree()
-        self.add_rooms()
-        self.spawn_items()
+        this.growing_tree()
+        this.add_rooms()
+        this.spawn_items()
     }
 }
+
+// export the maze generator
+module.exports = NodeMazeGenerator;
