@@ -6,7 +6,10 @@ describe("Maze Generator Tests", () => {
     const HEIGHT = 10;
 
     beforeAll(() => {
-        mazegen = new MazeGenerator(WIDTH, HEIGHT);
+        mazegen = new MazeGenerator({
+            width: 10,
+            height: 10
+        });
         mazegen.generate();
     });
 
