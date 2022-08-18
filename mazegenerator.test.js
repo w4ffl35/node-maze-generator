@@ -12,4 +12,17 @@ describe("Maze Generator Tests", () => {
     test('Maze Generator is created', () => {
         expect(mazegen).toBeDefined();
     });
+
+    test('Maze Generator has correct width', () => {
+        expect(mazegen.width).toEqual(WIDTH);
+    });
+
+    test('Maze Generator has correct height', () => {
+        expect(mazegen.height).toEqual(HEIGHT);
+    });
+
+    test('Maze Generator has correct number of cells', () => {
+        expect(mazegen.cells.length).toEqual(WIDTH);
+        expect(mazegen.cells[0].length).toEqual(HEIGHT);
+    });
 });
