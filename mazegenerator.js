@@ -6,7 +6,6 @@ class NodeMazeGenerator {
         this.generators = options.generators || [];
         this.neighbor_positions = options.neighbor_positions || [[0, -2], [0, 2], [-2, 0], [2, 0]];
         this.start_cell_coord = { x: 1, y: 1 };
-        this.unblock_neighbor = false;
         const GridClass = options.grid_class || Grid;
         this.grid = new GridClass({
             width: options.width,
@@ -18,8 +17,6 @@ class NodeMazeGenerator {
     }
 
     randomRange = (min, max) => Math.floor(Math.random() * (max - min)) + min;
-
-    updateCell = (cell) => this.grid.cells[parseInt(cell.y)][parseInt(cell.x)] = cell;
 
     getNeighborCells = (cell) => {
         let neighbor_cells = [];
@@ -43,11 +40,9 @@ class NodeMazeGenerator {
 
         while (get_cell) {
             current_cell.visited = true;
-            this.updateCell(current_cell);
             let neighbor_cells = this.getNeighborCells(current_cell);
             if (neighbor_cells.length > 0) {
                 let neighbor_cell = neighbor_cells[this.randomRange(0, neighbor_cells.length)];
-
                 // Set exits
                 let n_x = current_cell.x;
                 let n_y = current_cell.y;
@@ -66,13 +61,6 @@ class NodeMazeGenerator {
                 let new_cell = this.grid.getCell(n_x, n_y);
                 new_cell.blocked = false;
                 current_cell.blocked = false;
-                neighbor_cell.visited = true;
-                if (this.unblock_neighbor) {
-                    neighbor_cell.blocked = false;
-                }
-                this.updateCell(new_cell);
-                this.updateCell(neighbor_cell);
-                this.updateCell(current_cell);
                 prev_cells.push(current_cell);
                 current_cell = neighbor_cell;
             }
