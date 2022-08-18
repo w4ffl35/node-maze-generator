@@ -19,7 +19,7 @@ class NodeMazeGenerator {
 
     randomRange = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
-    updateCell = (cell) => this.grid.cells[cell.y][cell.x] = cell;
+    updateCell = (cell) => this.grid.cells[parseInt(cell.y)][parseInt(cell.x)] = cell;
 
     getNeighborCells = (cell) => {
         let neighbor_cells = [];
