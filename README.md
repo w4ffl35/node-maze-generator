@@ -101,7 +101,15 @@ Fork the repository and make a pull request.
 
 ## Tests
 
+Run unit tests
+
     npm run test
+
+Command line maze generation and rendering
+    
+    npm run start
+
+![img_2.png](sample_maze_output.png)
 
 ## Contributors
 
