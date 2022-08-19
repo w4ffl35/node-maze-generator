@@ -20,7 +20,7 @@ Generate perfect mazes with Node using a growing tree algorithm.
 
 Generator classes can be passed as an optional array of objects to the maze generator.
 
-The shape of this array is as follows:
+The shape of this data structure is as follows:
 
         [
             {
