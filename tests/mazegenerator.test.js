@@ -1,4 +1,4 @@
-const MazeGenerator = require('./mazegenerator.js');
+const MazeGenerator = require('../src/mazegenerator.js');
 
 describe("Maze Generator Tests", () => {
     let mazeGenerator = null;

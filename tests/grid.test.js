@@ -1,4 +1,4 @@
-const Grid = require('./grid.js');
+const Grid = require('../src/grid.js');
 
 describe("Grid Tests", () => {
     let grid = null;

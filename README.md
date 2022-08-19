@@ -41,6 +41,10 @@ In this way it is possible to access the maze generator grid data
         }
     }
 
+NodeMazeGenerator takes the following options
+
+    
+
 ## Contributing
 
 Fork the repository and make a pull request.

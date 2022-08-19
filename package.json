@@ -4,9 +4,9 @@
   "description": "Generate perfect mazes with Node using a growing tree algorithm",
   "main": "nodemazegenerator.min.js",
   "scripts": {
-    "start": "node main.js",
+    "start": "node src/main.js",
     "test": "jest",
-    "build": "jsmin -o nodemazegenerator.min.js index.js"
+    "build": "jsmin -o nodemazegenerator.min.js src/index.js"
   },
   "repository": {
     "type": "git",
