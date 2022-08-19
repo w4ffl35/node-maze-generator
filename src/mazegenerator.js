@@ -1,4 +1,5 @@
 const Grid = require('./grid.js');
+const randomRange = require('./utils.js').randomRange;
 
 class NodeMazeGenerator {
     constructor(options) {
@@ -15,8 +16,6 @@ class NodeMazeGenerator {
             start_y: options.start_y
         });
     }
-
-    randomRange = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
     getNeighborCells = (cell) => {
         let neighbor_cells = [];
@@ -42,7 +41,7 @@ class NodeMazeGenerator {
             current_cell.visited = true;
             let neighbor_cells = this.getNeighborCells(current_cell);
             if (neighbor_cells.length > 0) {
-                let neighbor_cell = neighbor_cells[this.randomRange(0, neighbor_cells.length)];
+                let neighbor_cell = neighbor_cells[randomRange(0, neighbor_cells.length)];
                 // Set exits
                 let n_x = current_cell.x;
                 let n_y = current_cell.y;
@@ -77,7 +76,7 @@ class NodeMazeGenerator {
 
     generate = () => {
         this.growingTree();
-        this.generators.forEach(GeneratorClass => new GeneratorClass().generate(this));
+        this.generators.forEach(generator => new generator.generator().generate(generator.options, this.grid));
     }
 }
 

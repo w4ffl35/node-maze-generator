@@ -1,19 +1,21 @@
+const randomRange = require('./utils.js').randomRange;
+
 class RoomGenerator {
-    generate = (mazeGenerator) => {
+    generate = (options, grid) => {
         let rooms = [];
-        const minRooms = parseInt(mazeGenerator.options.minRooms) || 1;
-        const maxRooms = parseInt(mazeGenerator.options.maxRooms) || 8;
-        const minRoomWidth = parseInt(mazeGenerator.options.minRoomWidth) || 1;
-        const minRoomHeight = parseInt(mazeGenerator.options.minRoomHeight) || 1;
-        const maxRoomWidth = parseInt(mazeGenerator.options.maxRoomWidth) || 8;
-        const maxRoomHeight = parseInt(mazeGenerator.options.maxRoomHeight) || 8;
-        let totalRooms = mazeGenerator.options.totalRooms || mazeGenerator.randomRange(minRooms, maxRooms);
+        const minRooms = parseInt(options.minRooms) || 1;
+        const maxRooms = parseInt(options.maxRooms) || 8;
+        const minRoomWidth = parseInt(options.minRoomWidth) || 1;
+        const minRoomHeight = parseInt(options.minRoomHeight) || 1;
+        const maxRoomWidth = parseInt(options.maxRoomWidth) || 8;
+        const maxRoomHeight = parseInt(options.maxRoomHeight) || 8;
+        let totalRooms = options.totalRooms || randomRange(minRooms, maxRooms);
         for (let i = 0; i < totalRooms; i++) {
-            let roomWidth = mazeGenerator.randomRange(minRoomWidth, maxRoomWidth);
-            let roomHeight = mazeGenerator.randomRange(minRoomHeight, maxRoomHeight);
+            let roomWidth = randomRange(minRoomWidth, maxRoomWidth);
+            let roomHeight = randomRange(minRoomHeight, maxRoomHeight);
             let room = {
-                x: mazeGenerator.randomRange(0, mazeGenerator.grid.width - roomWidth),
-                y: mazeGenerator.randomRange(0, mazeGenerator.grid.height - roomHeight),
+                x: randomRange(0, grid.width - roomWidth),
+                y: randomRange(0, grid.height - roomHeight),
                 width: roomWidth,
                 height: roomHeight
             };
@@ -23,7 +25,7 @@ class RoomGenerator {
             let room = rooms[i];
             for (let y = room.y; y < room.y + room.height; y++) {
                 for (let x = room.x; x < room.x + room.width; x++) {
-                    mazeGenerator.grid.unblockCell(x, y);
+                    grid.unblockCell(x, y);
                 }
             }
         }

@@ -18,31 +18,77 @@ Generate perfect mazes with Node using a growing tree algorithm.
 
 ### Generator classes
 
-Generator classes can be passed as an optional array to the maze generator. 
+Generator classes can be passed as an optional array of objects to the maze generator.
 
-As long these classes have a `generate` method the `NodeMazeGenerator` class will run the classes in the order 
-they are provided.
+The shape of this array is as follows:
+
+        [
+            {
+                generator: <generator class>,
+                options: <options object>
+            },
+            ...
+        ]
+
+Generator classes must have a `generate` function.
+
+`NodeMazeGenerator` will iterate over each generator class, instantiate it and call `generate` on each object in the 
+order they are provided.
 
 **Example**
 
-The following example shows how to generate a maze with rooms using the provided room generator. 
+The following example shows how to generate a maze with rooms using the provided room generator.
+
+(also see main.js)
 
     const nmg = require('node-maze-generator');
     const mazeGenerator = new nmg.generators.maze({ generators: [
-        nmg.generators.room
+        {
+            generator: nmg.generators.room,
+            options: {
+                ...
+            }
+        }
     ]});
+
+---
+
+#### Custom generator classes
 
 The `NodeMazeGenerator` class object will be passed to any generators given in the constructor.
 In this way it is possible to access the maze generator grid data
 
     class SomeGenerator {
-        generate = (mazeGenerator) => {
-            // do something with mazeGenerator.grid
+        generate = (options, grid) => {
+            // do something with grid object
         }
     }
 
-NodeMazeGenerator takes the following options
+---
 
+#### Optional arguments
+
+NodeMazeGenerator takes the following optional arguments:
+
+    {
+        width: <number>,
+        height: <number>,
+        cell_class: <class used to represent a cell on the grid>,
+        start_x: <starting x position on the grid>,
+        start_y: <starting y position on the grid>,
+        generators: <array of generator objects>
+    }
+
+RoomGenerator takes the following optional arguments:
+
+    {
+        minRooms: <minimum number of rooms>,
+        maxRooms: <maximum number of rooms>,
+        minRoomWidth: <minimum width of a room>,
+        minRoomHeight: <minimum height of a room>,
+        maxRoomWidth: <maximum width of a room>,
+        maxRoomHeight: <maximum height of a room>
+    }
     
 
 ## Contributing

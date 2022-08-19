@@ -5,7 +5,17 @@ const R = new Renderer(new NodeMazeGenerator({
     width: 20,
     height: 20,
     generators: [
-        RoomGenerator
+        {
+            generator: RoomGenerator,
+            options: {
+                minRooms: 1,
+                maxRooms: 8,
+                minRoomWidth: 1,
+                minRoomHeight: 1,
+                maxRoomWidth: 8,
+                maxRoomHeight: 8
+            }
+        }
     ]
 }));
 console.log("rendering...");
