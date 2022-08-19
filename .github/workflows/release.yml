@@ -1,0 +1,2 @@
+- name: GitHub Releases for Automated Package Publishing
+  uses: manovotny/github-releases-for-automated-package-publishing-action@v1.0.0
