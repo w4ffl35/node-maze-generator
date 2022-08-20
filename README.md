@@ -25,6 +25,22 @@ Generate perfect mazes with Node using a growing tree algorithm.
         █░░░░░░░░░█░░░░░░░██
         █░░░░░█████░░░░░░░██
         ████████████████████
+        
+        // Maze Data:
+
+        [
+          [
+            Cell {
+              x: 0,
+              y: 0,
+              exits: [],
+              blocked: true,
+              displayed: false,
+              visited: false
+            },
+            ...
+          ]
+        ]
 
 ## Installation
 
