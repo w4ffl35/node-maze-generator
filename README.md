@@ -73,6 +73,7 @@ NodeMazeGenerator takes the following optional arguments:
     {
         width: <number>,
         height: <number>,
+        grid_class:<class used to generate a grid, contains cell data>,
         cell_class: <class used to represent a cell on the grid>,
         start_x: <starting x position on the grid>,
         start_y: <starting y position on the grid>,
