@@ -46,12 +46,16 @@ Generate perfect mazes with Node using a growing tree algorithm.
 
     npm install node-maze-generator
 
+---
+
 ## Usage
 
     const nmg = require('node-maze-generator');
     const generator = new nmg.generators.maze({width: 10, height: 10});
     const renderer = new nmg.renderer(generator);
     renderer.render();
+
+---
 
 ### Generator classes
 
@@ -128,14 +132,19 @@ RoomGenerator takes the following optional arguments:
         maxRoomHeight: <maximum height of a room>
     }
     
+---
 
-## Contributing
+## Development
 
-Fork the repository and make a pull request.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+---
 
 ## License
 
 [MIT](LICENSE)
+
+---
 
 ## Tests
 
@@ -148,6 +157,8 @@ Command line maze generation and rendering
     npm run start
 
 ![img_2.png](sample_maze_output.png)
+
+---
 
 ## Contributors
 
