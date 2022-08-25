@@ -1,8 +1,8 @@
-const NodeMazeGenerator = require('./src/mazegenerator.js');
+const NodeMazeGenerator = require('./src/generators/maze.js');
 const Renderer = require('./src/renderer.js');
 const Cell = require('./src/cell.js');
 const Grid = require('./src/grid.js');
-const RoomGenerator = require('./src/roomGenerator.js');
+const RoomGenerator = require('./src/generators/room.js');
 
 module.exports = {
     generators: {

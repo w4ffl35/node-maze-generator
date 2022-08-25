@@ -1,5 +1,5 @@
-const MazeGenerator = require('../src/mazegenerator.js');
-const RoomGenerator = require('../src/roomgenerator.js');
+const MazeGenerator = require('../src/generators/maze.js');
+const RoomGenerator = require('../src/generators/room.js');
 
 describe("Room Generator Tests", () => {
     let mazeGenerator = null;

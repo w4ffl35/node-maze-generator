@@ -1,7 +1,7 @@
-const Grid = require('./grid.js');
-const randomRange = require('./utils.js').randomRange;
+const Grid = require('../grid.js');
+const randomRange = require('../utils.js').randomRange;
 
-class NodeMazeGenerator {
+class MazeGenerator {
     constructor(options) {
         this.options = options;
         this.generators = options.generators || [];
@@ -91,4 +91,4 @@ class NodeMazeGenerator {
     }
 }
 
-module.exports = NodeMazeGenerator;
+module.exports = MazeGenerator;

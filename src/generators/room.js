@@ -1,4 +1,4 @@
-const randomRange = require('./utils.js').randomRange;
+const randomRange = require('../utils.js').randomRange;
 
 class RoomGenerator {
     generate = (options, grid, data) => {

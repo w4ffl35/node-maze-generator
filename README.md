@@ -101,7 +101,7 @@ In this way it is possible to access the maze generator grid data
 
 Generators should match the following pattern.
 
-See `src/roomGenerator.js` for an example.
+See `src/room.js` for an example.
 
     class SomeGenerator {
         generate = (options: {}, grid: {}, data: {}) => {
@@ -127,7 +127,7 @@ NodeMazeGenerator takes the following optional arguments:
         generators: <array of generator objects>
     }
 
-RoomGenerator takes the following optional arguments:
+Roomgenerator takes the following optional arguments:
 
     {
         minRooms: <minimum number of rooms>,
