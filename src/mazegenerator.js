@@ -76,7 +76,18 @@ class NodeMazeGenerator {
 
     generate = () => {
         this.growingTree();
-        this.generators.forEach(generator => new generator.generator().generate(generator.options, this.grid));
+        this.data = {};
+        this.generators.forEach(
+            generator => {
+                this.data = new generator
+                    .generator()
+                    .generate(
+                        generator.options,
+                        this.grid,
+                        this.data
+                    );
+            }
+        );
     }
 }
 
