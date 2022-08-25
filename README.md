@@ -26,7 +26,7 @@ Generate perfect mazes with Node using a growing tree algorithm.
         █░░░░░█████░░░░░░░██
         ████████████████████
         
-        // Maze.js and room.js data structures:
+Maze.js and room.js data structures:
 
         {
             grid: [
