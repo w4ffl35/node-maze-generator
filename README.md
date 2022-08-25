@@ -29,28 +29,28 @@ Generate perfect mazes with Node using a growing tree algorithm.
         // Maze.js and room.js data structures:
 
         {
-			grid: [
-	          [
-	            Cell {
-	              x: 0,
-	              y: 0,
-	              exits: [],
-	              blocked: true,
-	              displayed: false,
-	              visited: false
-	            },
-	            ...
-	          ]
-	        ]
-			rooms: [
-				Room {
-					x: 0,
-					y: 0,
-					width: 0,
-					height: 0
-				}
-			]
-		}
+            grid: [
+              [
+                Cell {
+                  x: 0,
+                  y: 0,
+                  exits: [],
+                  blocked: true,
+                  displayed: false,
+                  visited: false
+                },
+                ...
+              ]
+            ]
+            rooms: [
+                Room {
+                    x: 0,
+                    y: 0,
+                    width: 0,
+                    height: 0
+                }
+            ]
+        }
 
 ## Installation
 
@@ -95,13 +95,13 @@ The following example shows how to generate a maze with rooms using the provided
             options: {
                 ...
             },
-			generator: nmg.generators.room,
-			options: {
-			...
-			}
+            generator: nmg.generators.room,
+            options: {
+            ...
+            }
         }
     ]});
-	new nmg.renderer(generator);
+    new nmg.renderer(generator);
 
 ---
 
@@ -112,7 +112,7 @@ Custom generators should match the following pattern.
     class SomeGenerator {
         constructor (data: {}, options: {}) {
             // do something with the data object
-			this.data.someProperty = 'someValue';
+            this.data.someProperty = 'someValue';
         }
     }
 
