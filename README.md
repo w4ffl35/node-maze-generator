@@ -116,13 +116,7 @@ Custom generators should match the following pattern.
         }
     }
 
-See `src/room.js` and `src/maze.js` for complete examples.
-
----
-
-#### Optional arguments
-
-see `src/maze.js` and `src/room.js` for a list of option arguments that each class takes.
+See `src/room.js` and `src/maze.js` for complete examples along with a list of optional arguments that each class takes.
     
 ---
 
