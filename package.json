@@ -1,6 +1,6 @@
 {
   "name": "node-maze-generator",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Generate perfect mazes with Node using a growing tree algorithm",
   "main": "index.js",
   "scripts": {
@@ -12,13 +12,13 @@
     "url": "git+https://github.com/w4ffl35/node-maze-generator.git"
   },
   "keywords": [
+    "maze generator",
     "maze",
-    "generator",
     "node",
     "mazes",
-    "mazegen",
-    "growing",
-    "tree"
+    "game development",
+    "growing tree",
+    "javascript maze generator"
   ],
   "author": "w4ffl35 (Joe Curlee)",
   "license": "MIT",
