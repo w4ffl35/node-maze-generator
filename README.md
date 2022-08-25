@@ -26,21 +26,31 @@ Generate perfect mazes with Node using a growing tree algorithm.
         █░░░░░█████░░░░░░░██
         ████████████████████
         
-        // Maze Data:
+        // Maze.js and room.js data structures:
 
-        [
-          [
-            Cell {
-              x: 0,
-              y: 0,
-              exits: [],
-              blocked: true,
-              displayed: false,
-              visited: false
-            },
-            ...
-          ]
-        ]
+        {
+			grid: [
+	          [
+	            Cell {
+	              x: 0,
+	              y: 0,
+	              exits: [],
+	              blocked: true,
+	              displayed: false,
+	              visited: false
+	            },
+	            ...
+	          ]
+	        ]
+			rooms: [
+				Room {
+					x: 0,
+					y: 0,
+					width: 0,
+					height: 0
+				}
+			]
+		}
 
 ## Installation
 
@@ -48,12 +58,11 @@ Generate perfect mazes with Node using a growing tree algorithm.
 
 ---
 
-## Usage
+## Quick use
 
     const nmg = require('node-maze-generator');
-    const generator = new nmg.generators.maze({width: 10, height: 10});
+    const generator = new nmg.generators.maze({}, {width: 10, height: 10});
     const renderer = new nmg.renderer(generator);
-    renderer.render();
 
 ---
 
@@ -71,10 +80,7 @@ The shape of this data structure is as follows:
             ...
         ]
 
-Generator classes must have a `generate` function.
-
-`NodeMazeGenerator` will iterate over each generator class, instantiate it and call `generate` on each object in the 
-order they are provided.
+`Generator` (`src/generator.js`) will iterate over each generator class and instantiate it.
 
 **Example**
 
@@ -83,60 +89,40 @@ The following example shows how to generate a maze with rooms using the provided
 (also see main.js)
 
     const nmg = require('node-maze-generator');
-    const mazeGenerator = new nmg.generators.maze({ generators: [
+    const generator = new nmg.generators.generator([
         {
-            generator: nmg.generators.room,
+            generator: nmg.generators.maze,
             options: {
                 ...
-            }
+            },
+			generator: nmg.generators.room,
+			options: {
+			...
+			}
         }
     ]});
+	new nmg.renderer(generator);
 
 ---
 
 #### Custom generator classes
 
-The `NodeMazeGenerator` class object will be passed to any generators given in the constructor.
-In this way it is possible to access the maze generator grid data
-
-Generators should match the following pattern.
-
-See `src/room.js` for an example.
+Custom generators should match the following pattern.
 
     class SomeGenerator {
-        generate = (options: {}, grid: {}, data: {}) => {
-            // do something with grid object
-
-			return data;
+        constructor (data: {}, options: {}) {
+            // do something with the data object
+			this.data.someProperty = 'someValue';
         }
     }
+
+See `src/room.js` and `src/maze.js` for complete examples.
 
 ---
 
 #### Optional arguments
 
-NodeMazeGenerator takes the following optional arguments:
-
-    {
-        width: <number>,
-        height: <number>,
-        grid_class:<class used to generate a grid, contains cell data>,
-        cell_class: <class used to represent a cell on the grid>,
-        start_x: <starting x position on the grid>,
-        start_y: <starting y position on the grid>,
-        generators: <array of generator objects>
-    }
-
-Roomgenerator takes the following optional arguments:
-
-    {
-        minRooms: <minimum number of rooms>,
-        maxRooms: <maximum number of rooms>,
-        minRoomWidth: <minimum width of a room>,
-        minRoomHeight: <minimum height of a room>,
-        maxRoomWidth: <maximum width of a room>,
-        maxRoomHeight: <maximum height of a room>
-    }
+see `src/maze.js` and `src/room.js` for a list of option arguments that each class takes.
     
 ---
 
