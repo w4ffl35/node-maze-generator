@@ -30,11 +30,12 @@ class Grid {
 
     isInBounds = (x, y) => x < this.width && x > MIN_BOUNDARY && y < this.height && y > MIN_BOUNDARY;
 
-    isInNeighborBounds = (x, y) => x < this.width - 1 && x > MIN_NEIGHBOR_BOUNDARY && y < this.height - 1 && y > MIN_NEIGHBOR_BOUNDARY;
+    // Returns true if coordinates are within navigation rectangle
+    isInNavigationBounds = (x, y) => x < this.width - 1 && x > MIN_NEIGHBOR_BOUNDARY && y < this.height - 1 && y > MIN_NEIGHBOR_BOUNDARY;
 
     getCell = (x, y) => this.isInBounds(x, y) ? this.cells[y][x] : null;
 
-    getNeighborCell = (x, y) => this.isInNeighborBounds(x, y) ? this.cells[y][x] : null;
+    getNeighborCell = (x, y) => this.isInNavigationBounds(x, y) ? this.cells[y][x] : null;
 
     unblockCell = (x, y) => {
         if (this.isInBounds(x, y)) {
