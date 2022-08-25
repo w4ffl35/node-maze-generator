@@ -2,19 +2,32 @@ const Grid = require('../grid.js');
 const randomRange = require('../utils.js').randomRange;
 
 class MazeGenerator {
-    constructor(options) {
+    /*
+    Options can include:
+        {
+            width: <number>,
+            height: <number>,
+            grid_class:<class used to generate a grid, contains cell data>,
+            cell_class: <class used to represent a cell on the grid>,
+            start_x: <starting x position on the grid>,
+            start_y: <starting y position on the grid>,
+            generators: <array of generator objects>
+        }
+     */
+    constructor(data, options) {
+        this.data = data||{};
         this.options = options;
-        this.generators = options.generators || [];
         this.neighbor_positions = options.neighbor_positions || [[0, -2], [0, 2], [-2, 0], [2, 0]];
         this.start_cell_coord = { x: 1, y: 1 };
         const GridClass = options.grid_class || Grid;
-        this.grid = new GridClass({
+        this.data.grid = new GridClass({
             width: options.width,
             height: options.height,
             cell_class: options.cell_class,
             start_x: options.start_x,
             start_y: options.start_y
         });
+        this.growingTree();
     }
 
     getNeighborCells = (cell) => {
@@ -22,7 +35,7 @@ class MazeGenerator {
         for (let i = 0; i < 4; i++) {
             let nx = cell.x + this.neighbor_positions[i][0];
             let ny = cell.y + this.neighbor_positions[i][1];
-            let neighbor_cell = this.grid.getNeighborCell(nx, ny);
+            let neighbor_cell = this.data.grid.getNeighborCell(nx, ny);
             if (neighbor_cell && !neighbor_cell.visited && neighbor_cell.blocked) {
                 neighbor_cells.push(neighbor_cell);
             }
@@ -35,7 +48,7 @@ class MazeGenerator {
         const y = this.start_cell_coord.y;
         let get_cell = true;
         let prev_cells = [];
-        let current_cell = this.grid.getCell(x, y);
+        let current_cell = this.data.grid.getCell(x, y);
 
         while (get_cell) {
             current_cell.visited = true;
@@ -57,7 +70,7 @@ class MazeGenerator {
                 else if (neighbor_cell.y < current_cell.y) {
                     n_y -= 1;
                 }
-                let new_cell = this.grid.getCell(n_x, n_y);
+                let new_cell = this.data.grid.getCell(n_x, n_y);
                 new_cell.blocked = false;
                 current_cell.blocked = false;
                 prev_cells.push(current_cell);
@@ -72,22 +85,6 @@ class MazeGenerator {
                 }
             }
         }
-    }
-
-    generate = () => {
-        this.growingTree();
-        this.data = {};
-        this.generators.forEach(
-            generator => {
-                this.data = new generator
-                    .generator()
-                    .generate(
-                        generator.options,
-                        this.grid,
-                        this.data
-                    );
-            }
-        );
     }
 }
 
