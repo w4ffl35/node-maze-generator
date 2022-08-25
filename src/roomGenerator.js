@@ -1,8 +1,8 @@
 const randomRange = require('./utils.js').randomRange;
 
 class RoomGenerator {
-    generate = (options, grid) => {
-        let rooms = [];
+    generate = (options, grid, data) => {
+        data.rooms = [];
         const minRooms = parseInt(options.minRooms) || 1;
         const maxRooms = parseInt(options.maxRooms) || 8;
         const minRoomWidth = parseInt(options.minRoomWidth) || 1;
@@ -19,16 +19,16 @@ class RoomGenerator {
                 width: roomWidth,
                 height: roomHeight
             };
-            rooms.push(room);
-        }
-        for (let i = 0; i < totalRooms; i++) {
-            let room = rooms[i];
             for (let y = room.y; y < room.y + room.height; y++) {
                 for (let x = room.x; x < room.x + room.width; x++) {
-                    grid.unblockCell(x, y);
+                    if (grid.isInNavigationBounds(x, y)) {
+                        grid.unblockCell(x, y);
+                    }
                 }
             }
+            data.rooms.push(room);
         }
+        return data;
     }
 }
 

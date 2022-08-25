@@ -99,9 +99,15 @@ The following example shows how to generate a maze with rooms using the provided
 The `NodeMazeGenerator` class object will be passed to any generators given in the constructor.
 In this way it is possible to access the maze generator grid data
 
+Generators should match the following pattern.
+
+See `src/roomGenerator.js` for an example.
+
     class SomeGenerator {
-        generate = (options, grid) => {
+        generate = (options: {}, grid: {}, data: {}) => {
             // do something with grid object
+
+			return data;
         }
     }
 

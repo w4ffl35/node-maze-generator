@@ -17,4 +17,8 @@ describe("Maze Generator Tests", () => {
     test('Maze Generator has grid', () => {
         expect(mazeGenerator.grid).toBeDefined();
     });
+
+    test('Maze Generator has data object', () => {
+        expect(mazeGenerator.data).toEqual({});
+    });
 });
