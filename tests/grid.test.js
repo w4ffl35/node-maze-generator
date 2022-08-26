@@ -3,12 +3,12 @@ const Grid = require('../src/grid.js');
 describe("Grid Tests", () => {
     let grid = null;
     const WIDTH = 10;
-    const HEIGHT = 10;
+    const HEIGHT = 12;
 
     beforeAll(() => {
         grid = new Grid({
-            width: 10,
-            height: 10
+            width: WIDTH,
+            height: HEIGHT
         });
     });
 
@@ -25,7 +25,8 @@ describe("Grid Tests", () => {
     });
 
     test('Maze Generator has correct number of cells', () => {
-        expect(grid.cells.length).toEqual(WIDTH);
+        expect(grid.cells.length).toEqual(1);
         expect(grid.cells[0].length).toEqual(HEIGHT);
+        expect(grid.cells[0][0].length).toEqual(WIDTH);
     });
 });
