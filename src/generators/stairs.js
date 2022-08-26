@@ -3,7 +3,6 @@
  * @classdesc Generates stairs for a cells in a grid.
  * @param {Object} data - The data object to use.
  * @param {Object} options - The options object to use.
- * @param {Object} data - The data object to use.
  */
 class StairsGenerator {
     constructor(data, _options) {

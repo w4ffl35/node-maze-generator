@@ -2,17 +2,20 @@ const Grid = require('../grid.js');
 const {Random} = require("../utils");
 
 class MazeGenerator {
-    /*
-    Options can include:
-        {
-            width: <number>,
-            height: <number>,
-            grid_class:<class used to generate a grid, contains cell data>,
-            cell_class: <class used to represent a cell on the grid>,
-            start_x: <starting x position on the grid>,
-            start_y: <starting y position on the grid>,
-            generators: <array of generator objects>
-        }
+    /**
+     * @class MazeGenerator
+     * @classdesc The maze generator class is responsible for generating a grid of Cell objects and storing them.
+     * @param {Object} data - The data object to use.
+     * @param {Object} options - The options object to use.
+     * @param {Number} options.width - The width of the grid.
+     * @param {Number} options.height - The height of the grid.
+     * @param {Array} options.floors - The total number of floors in the grid.
+     * @param {Number} options.start_x - The x position of the starting cell.
+     * @param {Number} options.start_y - The y position of the starting cell.
+     * @param {Number} options.start_z - The z position of the starting cell.
+     * @param {Cell} options.grid_class - The class used to generate a grid, contains cell data.
+     * @param {Cell} options.cell_class - The class used to represent a cell on the grid.
+     * @param {Array} options.neighbor_positions - The array of neighbor positions to use.
      */
     constructor(data, options) {
         this.data = data||{};
@@ -27,11 +30,17 @@ class MazeGenerator {
             cell_class: options.cell_class,
             start_x: options.start_x,
             start_y: options.start_y,
+            start_z: options.start_z,
             floors: []
         });
         this.growingTree();
     }
 
+    /**
+     * @function getNeighborCells
+     * @param {Object} cell
+     * @returns {*[Cell]}
+     */
     getNeighborCells = (cell) => {
         let neighbor_cells = [];
         for (let i = 0; i < 4; i++) {
@@ -45,6 +54,11 @@ class MazeGenerator {
         return neighbor_cells;
     }
 
+    /**
+     * @function growingTree
+     * @description The growing tree algorithm.
+     * @returns {void}
+     */
     growingTree = () => {
         for (let z = 0; z < this.data.grid.total_floors; z++) {
             const x = this.start_cell_coord.x;

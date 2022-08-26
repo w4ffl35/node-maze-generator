@@ -12,6 +12,19 @@ class RoomGenerator {
             maxRoomHeight: <maximum height of a room>
         }
      */
+    /**
+     * @class RoomGenerator
+     * @classdesc Generates rooms for a cells in a grid.
+     * @param {Object} data - The data object to use.
+     * @param {Object} options - The options object to use.
+     * @param {Number} options.minRooms - The minimum number of rooms to generate.
+     * @param {Number} options.maxRooms - The maximum number of rooms to generate.
+     * @param {Number} options.minRoomWidth - The minimum width of a room.
+     * @param {Number} options.minRoomHeight - The minimum height of a room.
+     * @param {Number} options.maxRoomWidth - The maximum width of a room.
+     * @param {Number} options.maxRoomHeight - The maximum height of a room.
+     * @param {Number} options.totalRooms - The total number of rooms to generate.
+     */
     constructor(data, options) {
         this.options = options
         this.data = data||{};
