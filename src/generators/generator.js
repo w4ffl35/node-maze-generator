@@ -1,5 +1,8 @@
+const {Random} = require('../utils');
+
 class Generator {
-    constructor(generators) {
+    constructor(generators, seed) {
+        Random.seed(seed);
         this.data = {};
         generators.forEach(
             generator => {
