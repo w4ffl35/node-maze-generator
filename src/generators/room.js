@@ -1,17 +1,6 @@
 const {Random} = require('../utils.js');
 
 class RoomGenerator {
-    /*
-    Options can include:
-        {
-            minRooms: <minimum number of rooms>,
-            maxRooms: <maximum number of rooms>,
-            minRoomWidth: <minimum width of a room>,
-            minRoomHeight: <minimum height of a room>,
-            maxRoomWidth: <maximum width of a room>,
-            maxRoomHeight: <maximum height of a room>
-        }
-     */
     /**
      * @class RoomGenerator
      * @classdesc Generates rooms for a cells in a grid.
