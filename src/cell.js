@@ -1,8 +1,8 @@
 class Cell {
-    constructor(x, y, visited = false, displayed = false) {
+    constructor(x, y, z, visited = false) {
         this.x = x;
         this.y = y;
-        this.exits = [];
+        this.z = z;
         this.blocked = true;
         this.visited = visited || false;
     }
