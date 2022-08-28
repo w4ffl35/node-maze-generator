@@ -3,7 +3,8 @@ const NodeMazeGenerator = require('./generators/maze.js');
 const Renderer = require('./renderer.js');
 const RoomGenerator = require('./generators/room.js');
 const StairGenerator = require('./generators/stairs.js');
-const SEED = 99;
+const {Random} = require("./utils");
+const SEED = 100;
 const WIDTH = 21;
 const HEIGHT = 21;
 const FLOORS = 2;
@@ -13,6 +14,9 @@ const MIN_ROOM_WIDTH = 1;
 const MIN_ROOM_HEIGHT = 1;
 const MAX_ROOM_WIDTH = 8;
 const MAX_ROOM_HEIGHT = 8;
+
+Random.seed(SEED);
+
 new Renderer(new Generator([
     {
         generator: NodeMazeGenerator,
