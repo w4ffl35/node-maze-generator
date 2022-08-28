@@ -5,6 +5,7 @@ const StairGenerator = require('./src/generators/stairs.js');
 const Renderer = require('./src/renderer.js');
 const Cell = require('./src/cell.js');
 const Grid = require('./src/grid.js');
+const Utils = require('./src/utils.js');
 
 module.exports = {
     generators: {
@@ -15,5 +16,6 @@ module.exports = {
     },
     renderer: Renderer,
     cell: Cell,
-    grid: Grid
+    grid: Grid,
+    utils: Utils
 }
