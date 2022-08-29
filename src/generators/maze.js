@@ -33,7 +33,7 @@ class MazeGenerator {
             start_z: options.start_z,
             floors: []
         });
-        this.growingTree();
+        this.generate();
     }
 
     /**
@@ -55,11 +55,11 @@ class MazeGenerator {
     }
 
     /**
-     * @function growingTree
-     * @description The growing tree algorithm.
+     * @function generate
+     * @description Generate a maze using the growing tree algorithm.
      * @returns {void}
      */
-    growingTree = () => {
+    generate = () => {
         for (let z = 0; z < this.data.grid.total_floors; z++) {
             const x = this.start_cell_coord.x;
             const y = this.start_cell_coord.y;

@@ -6,37 +6,42 @@
  */
 class StairsGenerator {
     constructor(data, options) {
-        const MAX_STAIRS = options.max_stairs||1;
+        this.data = data||{};
+        this.options = options||{};
+        this.max_stairs = options.max_stairs || 1;
+        this.generate();
+    }
+
+    generate = () => {
         let total_stairs_by_floor = [];
         // Iterate over each floor in the grid
-        for (let floor = 0; floor < data.grid.total_floors - 1; floor++) {
+        for (let floor = 0; floor < this.data.grid.total_floors - 1; floor++) {
             // Repeat loop until we find a cell that satisfies the conditions
             let cell = null;
-            while (cell === null)
+            while (true)
             {
-                if (total_stairs_by_floor[floor] && total_stairs_by_floor[floor] >= MAX_STAIRS) {
+                if (total_stairs_by_floor[floor] && total_stairs_by_floor[floor] >= this.max_stairs) {
                     break;
                 }
                 let previous_floor_cell = null;
                 let next_floor_cell = null;
 
                 // get a random cell from the current floor
-                cell = data.grid.randomCell(floor);
+                cell = this.data.grid.randomCell(floor);
                 if (cell.blocked) {
-                    cell = null;
                     continue;
                 }
 
                 // get the previous floor cell
                 if (floor > 0) {
-                    previous_floor_cell = data.grid.cells[floor - 1][cell.y][cell.x];
+                    previous_floor_cell = this.data.grid.cells[floor - 1][cell.y][cell.x];
                     if (previous_floor_cell.blocked) {
                         previous_floor_cell = null;
                     }
                 }
 
                 // get the next floor cell
-                next_floor_cell = data.grid.cells[floor + 1][cell.y][cell.x];
+                next_floor_cell = this.data.grid.cells[floor + 1][cell.y][cell.x];
                 if (next_floor_cell.blocked) {
                     next_floor_cell = null;
                 }
@@ -52,15 +57,9 @@ class StairsGenerator {
                         direction: 'down'
                     };
                     total_stairs_by_floor[floor] = (total_stairs_by_floor[floor] || 0) + 1;
-                    cell = null;
-                }
-                else {
-                    cell = null;
                 }
             }
         }
-
-        this.data = data;
     }
 }
 

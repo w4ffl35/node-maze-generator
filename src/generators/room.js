@@ -18,17 +18,21 @@ class RoomGenerator {
         this.options = options
         this.data = data||{};
         this.data.rooms = [];
-        const minRooms = parseInt(this.options.minRooms) || 1;
-        const maxRooms = parseInt(this.options.maxRooms) || 8;
-        const minRoomWidth = parseInt(this.options.minRoomWidth) || 1;
-        const minRoomHeight = parseInt(this.options.minRoomHeight) || 1;
-        const maxRoomWidth = parseInt(this.options.maxRoomWidth) || 8;
-        const maxRoomHeight = parseInt(this.options.maxRoomHeight) || 8;
-        let totalRooms = this.options.totalRooms || Random.range(minRooms, maxRooms);
+        const minRooms = parseInt(options.minRooms) || 1;
+        const  maxRooms = parseInt(options.maxRooms) || 8;
+        this.minRoomWidth = parseInt(options.minRoomWidth) || 1;
+        this.minRoomHeight = parseInt(options.minRoomHeight) || 1;
+        this.maxRoomWidth = parseInt(options.maxRoomWidth) || 8;
+        this.maxRoomHeight = parseInt(options.maxRoomHeight) || 8;
+        this.totalRooms = this.options.totalRooms || Random.range(minRooms, maxRooms);
+        this.generate();
+    }
+
+    generate = () => {
         for (let z = 0; z < this.data.grid.total_floors; z++) {
-            for (let i = 0; i < totalRooms; i++) {
-                let roomWidth = Random.range(minRoomWidth, maxRoomWidth);
-                let roomHeight = Random.range(minRoomHeight, maxRoomHeight);
+            for (let i = 0; i < this.totalRooms; i++) {
+                let roomWidth = Random.range(this.minRoomWidth, this.maxRoomWidth);
+                let roomHeight = Random.range(this.minRoomHeight, this.maxRoomHeight);
                 let room = {
                     x: Random.range(0, this.data.grid.width - roomWidth),
                     y: Random.range(0, this.data.grid.height - roomHeight),
