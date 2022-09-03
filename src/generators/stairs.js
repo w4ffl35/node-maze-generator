@@ -13,7 +13,7 @@ class StairsGenerator {
     }
 
     generate = () => {
-        let total_stairs_by_floor = [];
+        let total_stairs_by_floor = {};
         // Iterate over each floor in the grid
         for (let floor = 0; floor < this.data.grid.total_floors - 1; floor++) {
             // Repeat loop until we find a cell that satisfies the conditions
@@ -42,22 +42,20 @@ class StairsGenerator {
 
                 // get the next floor cell
                 next_floor_cell = this.data.grid.cells[floor + 1][cell.y][cell.x];
-                if (next_floor_cell.blocked) {
-                    next_floor_cell = null;
+                if (next_floor_cell === null || next_floor_cell.blocked) {
+                    continue;
                 }
 
-                // add stairs if there is a previous or next floor cell
-                if (next_floor_cell !== null && next_floor_cell.blocked === false) {
-                    cell.stairs = {
-                        next_floor: next_floor_cell,
-                        direction: 'up'
-                    };
-                    if (next_floor_cell) next_floor_cell.stairs = {
-                        previous_floor: cell,
-                        direction: 'down'
-                    };
-                    total_stairs_by_floor[floor] = (total_stairs_by_floor[floor] || 0) + 1;
-                }
+                // add stairs
+                cell.stairs = {
+                    next_floor: next_floor_cell,
+                    direction: 'up'
+                };
+                if (next_floor_cell) next_floor_cell.stairs = {
+                    previous_floor: cell,
+                    direction: 'down'
+                };
+                total_stairs_by_floor[floor] = (total_stairs_by_floor[floor] || 0) + 1;
             }
         }
     }

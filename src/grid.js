@@ -65,13 +65,12 @@ class Grid {
     /**
      * @function randomCell
      * @description Returns a random cell from the grid.
-     * @param  {Number} floor  The floor to get a cell from
+     * @param  {Number} z      The floor to get a cell from
      * @return {Object}        Cell object
      */
-    randomCell = (floor) => {
+    randomCell = (z) => {
         const x = Random.range(MIN_NEIGHBOR_BOUNDARY, this.width - 2);
         const y = Random.range(MIN_NEIGHBOR_BOUNDARY, this.height - 2);
-        const z = floor || Random.range(MIN_NEIGHBOR_BOUNDARY, this.total_floors - 1);
         return this.getCell(x, y, z);
     }
 
