@@ -7,7 +7,7 @@
 class StairsGenerator {
     constructor(data, options) {
         this.data = data||{};
-        this.options = options||{ascending: true};
+        this.options = options||{ascending: false};
         this.max_stairs = options.max_stairs || 1;
         this.generate();
     }
