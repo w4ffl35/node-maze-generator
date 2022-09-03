@@ -13,7 +13,7 @@ class StairsGenerator {
     }
 
     generate = () => {
-        let total_stairs_by_floor = [];
+        let total_stairs_by_floor = {};
         // Iterate over each floor in the grid
         for (let floor = 0; floor < this.data.grid.total_floors - 1; floor++) {
             // Repeat loop until we find a cell that satisfies the conditions
