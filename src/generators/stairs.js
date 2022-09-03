@@ -7,7 +7,7 @@
 class StairsGenerator {
     constructor(data, options) {
         this.data = data||{};
-        this.options = options||{};
+        this.options = options||{ascending: true};
         this.max_stairs = options.max_stairs || 1;
         this.generate();
     }
@@ -49,11 +49,11 @@ class StairsGenerator {
                 // add stairs
                 cell.stairs = {
                     next_floor: next_floor_cell,
-                    direction: 'up'
+                    direction: this.options.ascending ? 'up' : 'down'
                 };
                 if (next_floor_cell) next_floor_cell.stairs = {
                     previous_floor: cell,
-                    direction: 'down'
+                    direction: this.options.ascending ? 'down' : 'up'
                 };
                 total_stairs_by_floor[floor] = (total_stairs_by_floor[floor] || 0) + 1;
             }
