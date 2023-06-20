@@ -173,7 +173,8 @@ Use the `src.generators.stairs` generator to connect the floors with stairs.
     █░░░░░█░░░░░░░█░░░░░█
     █████████████████████
 
-    ⚙ = stairs
+    ▲ = stairs going up
+    ▼ = stairs going down
     █ = wall
     ░ = floor
 
