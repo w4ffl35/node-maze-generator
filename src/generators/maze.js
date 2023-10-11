@@ -60,46 +60,31 @@ class MazeGenerator {
      * @returns {void}
      */
     generate = () => {
-        for (let z = 0; z < this.data.grid.total_floors; z++) {
-            const x = this.start_cell_coord.x;
-            const y = this.start_cell_coord.y;
-            let get_cell = true;
-            let prev_cells = [];
-            let current_cell = this.data.grid.getCell(x, y, z);
+        const { x: startX, y: startY } = this.start_cell_coord;
+        const { total_floors } = this.data.grid;
 
-            while (get_cell) {
-                current_cell.visited = true;
-                let neighbor_cells = this.getNeighborCells(current_cell);
-                if (neighbor_cells.length > 0) {
-                    let neighbor_cell = neighbor_cells[Random.range(0, neighbor_cells.length)];
-                    // Set exits
-                    let n_x = current_cell.x;
-                    let n_y = current_cell.y;
-                    if (neighbor_cell.x > current_cell.x) {
-                        n_x += 1;
-                    }
-                    else if (neighbor_cell.x < current_cell.x) {
-                        n_x -= 1;
-                    }
-                    if (neighbor_cell.y > current_cell.y) {
-                        n_y += 1;
-                    }
-                    else if (neighbor_cell.y < current_cell.y) {
-                        n_y -= 1;
-                    }
-                    let new_cell = this.data.grid.getCell(n_x, n_y, z);
-                    new_cell.blocked = false;
-                    current_cell.blocked = false;
-                    prev_cells.push(current_cell);
-                    current_cell = neighbor_cell;
-                }
-                else {
-                    if (prev_cells.length > 0) {
-                        current_cell = prev_cells.pop();
-                    }
-                    else {
-                        get_cell = false;
-                    }
+        for (let z = 0; z < total_floors; z++) {
+            let prevCells = [];
+            let currentCell = this.data.grid.getCell(startX, startY, z);
+
+            while (true) {
+                currentCell.visited = true;
+                const neighborCells = this.getNeighborCells(currentCell);
+                if (neighborCells.length === 0) {
+                    if (prevCells.length === 0) break;
+                    currentCell = prevCells.pop();
+                } else {
+                    const neighborCell = neighborCells[Random.range(0, neighborCells.length)];
+                    let { x: nX, y: nY } = currentCell;
+                    if (neighborCell.x > currentCell.x) nX += 1;
+                    else if (neighborCell.x < currentCell.x) nX -= 1;
+                    if (neighborCell.y > currentCell.y) nY += 1;
+                    else if (neighborCell.y < currentCell.y) nY -= 1;
+                    const newCell = this.data.grid.getCell(nX, nY, z);
+                    newCell.blocked = false;
+                    currentCell.blocked = false;
+                    prevCells.push(currentCell);
+                    currentCell = neighborCell;
                 }
             }
         }
